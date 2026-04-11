@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    container_name: alif-relief-web
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - db_data:/data
+
+volumes:
+  db_data:

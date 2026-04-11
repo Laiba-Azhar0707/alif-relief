@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Donations</h4>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">+ Add Donation</button>
+</div>
+<div class="card"><div class="card-body">
+<table class="table table-hover">
+    <thead><tr><th>#</th><th>Donor</th><th>Campaign</th><th>Amount</th><th>Date</th><th>Method</th><th>Action</th></tr></thead>
+    <tbody>{% for d in donations %}<tr>
+        <td>{{ loop.index }}</td><td>{{ d.donor_name or 'Anonymous' }}</td>
+        <td>{{ d.campaign_name or '-' }}</td><td>Rs {{ d.amount }}</td>
+        <td>{{ d.date }}</td><td>{{ d.method }}</td>
+        <td><form method="POST" action="/donations/delete/{{ d.id }}" onsubmit="return confirm('Delete?')">
+            <button class="btn btn-danger btn-sm">Delete</button></form></td>
+    </tr>{% endfor %}</tbody>
+</table>
+</div></div>
+<div class="modal fade" id="addModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Add Donation</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <form method="POST" action="/donations/add"><div class="modal-body">
+        <select name="donor_id" class="form-control mb-2"><option value="">Select Donor</option>{% for d in donors %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}</select>
+        <select name="campaign_id" class="form-control mb-2"><option value="">Select Campaign</option>{% for c in campaigns %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select>
+        <input name="amount" type="number" class="form-control mb-2" placeholder="Amount" required>
+        <input name="date" type="date" class="form-control mb-2" required>
+        <select name="method" class="form-control mb-2"><option>Cash</option><option>Bank Transfer</option><option>Online</option></select>
+        <textarea name="notes" class="form-control" placeholder="Notes"></textarea>
+    </div><div class="modal-footer"><button class="btn btn-primary">Save</button></div></form>
+</div></div></div>
+{% endblock %}

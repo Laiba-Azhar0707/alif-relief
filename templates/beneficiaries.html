@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Beneficiaries</h4>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">+ Add Beneficiary</button>
+</div>
+<div class="card"><div class="card-body">
+<table class="table table-hover">
+    <thead><tr><th>#</th><th>Name</th><th>Phone</th><th>City</th><th>Category</th><th>Members</th><th>Action</th></tr></thead>
+    <tbody>{% for b in beneficiaries %}<tr>
+        <td>{{ loop.index }}</td><td>{{ b.name }}</td><td>{{ b.phone }}</td>
+        <td>{{ b.city }}</td><td>{{ b.category }}</td><td>{{ b.members }}</td>
+        <td><form method="POST" action="/beneficiaries/delete/{{ b.id }}" onsubmit="return confirm('Delete?')">
+            <button class="btn btn-danger btn-sm">Delete</button></form></td>
+    </tr>{% endfor %}</tbody>
+</table>
+</div></div>
+<div class="modal fade" id="addModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Add Beneficiary</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+    <form method="POST" action="/beneficiaries/add"><div class="modal-body">
+        <input name="name" class="form-control mb-2" placeholder="Full Name" required>
+        <input name="phone" class="form-control mb-2" placeholder="Phone">
+        <input name="city" class="form-control mb-2" placeholder="City">
+        <input name="cnic" class="form-control mb-2" placeholder="CNIC">
+        <input name="category" class="form-control mb-2" placeholder="Category">
+        <input name="members" type="number" class="form-control" placeholder="Family Members" value="1">
+    </div><div class="modal-footer"><button class="btn btn-primary">Save</button></div></form>
+</div></div></div>
+{% endblock %}

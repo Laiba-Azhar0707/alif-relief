@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-4">Dashboard <span class="badge bg-success ms-2" style="font-size:0.6rem;">Active Season</span></h4>
+<div class="row g-3 mb-4">
+    <div class="col-md-3"><div class="stat-card" style="background:linear-gradient(135deg,#667eea,#764ba2)"><div style="font-size:0.8rem;opacity:0.8">TOTAL DONORS</div><h2>{{ donors }}</h2><div style="font-size:0.8rem">Registered donors</div></div></div>
+    <div class="col-md-3"><div class="stat-card" style="background:linear-gradient(135deg,#f093fb,#f5576c)"><div style="font-size:0.8rem;opacity:0.8">TOTAL RAISED</div><h2>Rs {{ total_donations }}</h2><div style="font-size:0.8rem">All received donations</div></div></div>
+    <div class="col-md-3"><div class="stat-card" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"><div style="font-size:0.8rem;opacity:0.8">ACTIVE CAMPAIGNS</div><h2>{{ campaigns }}</h2><div style="font-size:0.8rem">Ongoing campaigns</div></div></div>
+    <div class="col-md-3"><div class="stat-card" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"><div style="font-size:0.8rem;opacity:0.8">BENEFICIARIES</div><h2>{{ beneficiaries }}</h2><div style="font-size:0.8rem">Registered families</div></div></div>
+</div>
+<div class="row g-3">
+    <div class="col-md-6"><div class="card p-3"><h6 class="mb-3">Recent Donations</h6>
+        {% if recent_donations %}
+        <table class="table table-sm"><thead><tr><th>Donor</th><th>Campaign</th><th>Amount</th></tr></thead><tbody>
+        {% for d in recent_donations %}<tr><td>{{ d.donor_name or 'Anonymous' }}</td><td>{{ d.campaign_name or '-' }}</td><td>Rs {{ d.amount }}</td></tr>{% endfor %}
+        </tbody></table>
+        {% else %}<p class="text-muted">No donations recorded yet.</p>{% endif %}
+    </div></div>
+    <div class="col-md-6"><div class="card p-3"><h6 class="mb-3">Campaign Progress</h6>
+        {% if active_campaigns %}
+        {% for c in active_campaigns %}<div class="mb-2"><div class="d-flex justify-content-between"><span>{{ c.name }}</span><span>{{ c.status }}</span></div></div>{% endfor %}
+        {% else %}<p class="text-muted">No active campaigns.</p>{% endif %}
+    </div></div>
+</div>
+{% endblock %}

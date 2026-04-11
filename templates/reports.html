@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4 class="mb-4">Reports</h4>
+<div class="row g-3 mb-4">
+    <div class="col-md-3"><div class="card p-3 text-center"><h6>Total Raised</h6><h3 class="text-success">Rs {{ total_raised }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 text-center"><h6>Total Donors</h6><h3 class="text-primary">{{ total_donors }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 text-center"><h6>Beneficiaries</h6><h3 class="text-warning">{{ total_beneficiaries }}</h3></div></div>
+    <div class="col-md-3"><div class="card p-3 text-center"><h6>Volunteers</h6><h3 class="text-info">{{ total_volunteers }}</h3></div></div>
+</div>
+<div class="card"><div class="card-body">
+    <h6>Campaign-wise Collection</h6>
+    <table class="table"><thead><tr><th>Campaign</th><th>Target</th><th>Raised</th></tr></thead>
+    <tbody>{% for c in campaign_stats %}<tr>
+        <td>{{ c.name }}</td><td>Rs {{ c.target }}</td><td>Rs {{ c.raised }}</td>
+    </tr>{% endfor %}</tbody></table>
+</div></div>
+{% endblock %}
