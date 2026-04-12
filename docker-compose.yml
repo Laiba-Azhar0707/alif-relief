@@ -1,12 +1,24 @@
 services:
   web:
     build: .
-    container_name: alif-relief-web
+    container_name: alif-relief-web-v2  # Changed name for Part II requirement
     restart: unless-stopped
     ports:
       - "5000:5000"
     volumes:
-      - db_data:/data
+      - .:/app                         # Requirement: Attach volume for code
+    depends_on:
+      - db
+
+  db:                                  # Requirement: Must use a Database Server
+    image: mysql:8.0
+    container_name: alif-relief-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: alif_db
+    volumes:
+      - db_data:/var/lib/mysql         # Requirement: Persistent volume for DB
 
 volumes:
-  db_data:
+  db_data:                             # Named volume for data persistence
