@@ -3,9 +3,9 @@ pipeline {
     stages {
         stage('Deploy App') {
             steps {
-                // This builds and runs your containerized app
-                sh 'docker-compose down || true'
-                sh 'docker-compose up -d --build'
+                // We removed the dash between docker and compose
+                sh 'docker compose down || true'
+                sh 'docker compose up -d --build'
             }
         }
     }
