@@ -1,11 +1,15 @@
-pipeline {
+=pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Laiba-Azhar0707/alif-relief.git'
+            }
+        }
         stage('Deploy App') {
             steps {
-                // We removed the dash between docker and compose
-                sh 'docker compose down || true'
-                sh 'docker compose up -d --build'
+                sh 'docker compose -f docker-compose.pipeline.yml down || true'
+                sh 'docker compose -f docker-compose.pipeline.yml up -d --build'
             }
         }
     }
