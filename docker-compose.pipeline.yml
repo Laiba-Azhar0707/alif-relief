@@ -1,0 +1,24 @@
+services:
+  web:
+    build: .
+    container_name: alif-pipeline-web
+    restart: unless-stopped
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: alif-pipeline-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: alif_db
+    volumes:
+      - pipeline_db_data:/var/lib/mysql
+
+volumes:
+  pipeline_db_data:
