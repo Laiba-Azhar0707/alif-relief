@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
-BASE_URL = "http://172.17.0.1:5000"
+BASE_URL = "http://172.17.0.1:5001"
 
 @pytest.fixture(scope="module")
 def driver():
@@ -25,14 +25,12 @@ def driver():
     dr.quit()
 
 
-# ── TEST 1 ──────────────────────────────────────────────────────────────────
 def test_01_dashboard_loads(driver):
     """Dashboard page loads successfully."""
     driver.get(BASE_URL + "/")
     assert "Alif Relief" in driver.title or driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 2 ──────────────────────────────────────────────────────────────────
 def test_02_dashboard_stats_visible(driver):
     """Dashboard shows stats cards."""
     driver.get(BASE_URL + "/")
@@ -40,7 +38,6 @@ def test_02_dashboard_stats_visible(driver):
     assert any(word in body for word in ["Donors", "Campaigns", "Beneficiaries", "Raised"])
 
 
-# ── TEST 3 ──────────────────────────────────────────────────────────────────
 def test_03_donors_page_loads(driver):
     """Donors page loads successfully."""
     driver.get(BASE_URL + "/donors")
@@ -48,7 +45,6 @@ def test_03_donors_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 4 ──────────────────────────────────────────────────────────────────
 def test_04_add_donor(driver):
     """Add a new donor via form."""
     driver.get(BASE_URL + "/donors")
@@ -62,7 +58,6 @@ def test_04_add_donor(driver):
     assert "Test Donor Selenium" in driver.find_element(By.TAG_NAME, "body").text
 
 
-# ── TEST 5 ──────────────────────────────────────────────────────────────────
 def test_05_donor_search(driver):
     """Search for a donor by name."""
     driver.get(BASE_URL + "/donors?q=Test+Donor+Selenium")
@@ -70,7 +65,6 @@ def test_05_donor_search(driver):
     assert "Test Donor Selenium" in body
 
 
-# ── TEST 6 ──────────────────────────────────────────────────────────────────
 def test_06_campaigns_page_loads(driver):
     """Campaigns page loads successfully."""
     driver.get(BASE_URL + "/campaigns")
@@ -78,7 +72,6 @@ def test_06_campaigns_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 7 ──────────────────────────────────────────────────────────────────
 def test_07_add_campaign(driver):
     """Add a new campaign via form."""
     driver.get(BASE_URL + "/campaigns")
@@ -90,7 +83,6 @@ def test_07_add_campaign(driver):
     assert "Selenium Test Campaign" in driver.find_element(By.TAG_NAME, "body").text
 
 
-# ── TEST 8 ──────────────────────────────────────────────────────────────────
 def test_08_donations_page_loads(driver):
     """Donations page loads successfully."""
     driver.get(BASE_URL + "/donations")
@@ -98,7 +90,6 @@ def test_08_donations_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 9 ──────────────────────────────────────────────────────────────────
 def test_09_add_donation(driver):
     """Add a new donation via form."""
     driver.get(BASE_URL + "/donations")
@@ -112,7 +103,6 @@ def test_09_add_donation(driver):
     assert "5,000" in body or "5000" in body or "Donation" in body
 
 
-# ── TEST 10 ──────────────────────────────────────────────────────────────────
 def test_10_beneficiaries_page_loads(driver):
     """Beneficiaries page loads successfully."""
     driver.get(BASE_URL + "/beneficiaries")
@@ -120,7 +110,6 @@ def test_10_beneficiaries_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 11 ──────────────────────────────────────────────────────────────────
 def test_11_add_beneficiary(driver):
     """Add a new beneficiary via form."""
     driver.get(BASE_URL + "/beneficiaries")
@@ -132,7 +121,6 @@ def test_11_add_beneficiary(driver):
     assert "Selenium Beneficiary" in driver.find_element(By.TAG_NAME, "body").text
 
 
-# ── TEST 12 ──────────────────────────────────────────────────────────────────
 def test_12_volunteers_page_loads(driver):
     """Volunteers page loads successfully."""
     driver.get(BASE_URL + "/volunteers")
@@ -140,7 +128,6 @@ def test_12_volunteers_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 13 ──────────────────────────────────────────────────────────────────
 def test_13_add_volunteer(driver):
     """Add a new volunteer via form."""
     driver.get(BASE_URL + "/volunteers")
@@ -152,7 +139,6 @@ def test_13_add_volunteer(driver):
     assert "Selenium Volunteer" in driver.find_element(By.TAG_NAME, "body").text
 
 
-# ── TEST 14 ──────────────────────────────────────────────────────────────────
 def test_14_reports_page_loads(driver):
     """Reports page loads successfully."""
     driver.get(BASE_URL + "/reports")
@@ -160,7 +146,6 @@ def test_14_reports_page_loads(driver):
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
-# ── TEST 15 ──────────────────────────────────────────────────────────────────
 def test_15_reports_shows_data(driver):
     """Reports page shows summary statistics."""
     driver.get(BASE_URL + "/reports")
