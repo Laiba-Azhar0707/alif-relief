@@ -43,21 +43,11 @@ def test_03_donors_page_loads(driver):
 
 def test_04_add_donor(driver):
     driver.get(BASE_URL + "/donors")
-    wait = WebDriverWait(driver, 10)
-    # Click the toggle button to open the add form
-    toggle = driver.find_element(By.CSS_SELECTOR, "[data-bs-toggle], button[onclick], .btn[href*='add'], button")
-    buttons = driver.find_elements(By.TAG_NAME, "button")
-    for btn in buttons:
-        if "Add" in btn.text or "add" in btn.get_attribute("class", ) or btn.get_attribute("data-bs-toggle"):
-            btn.click()
-            break
-    time.sleep(1)
-    wait.until(EC.visibility_of_element_located((By.NAME, "name")))
     driver.find_element(By.NAME, "name").send_keys("Test Donor Selenium")
     driver.find_element(By.NAME, "phone").send_keys("03001234567")
     driver.find_element(By.NAME, "city").send_keys("Islamabad")
     driver.find_element(By.NAME, "email").send_keys("testdonor@selenium.com")
-    driver.find_element(By.CSS_SELECTOR, "form button[type='submit']").click()
+    driver.find_element(By.CSS_SELECTOR, "button.btn-primary").click()
     time.sleep(1)
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
@@ -65,7 +55,7 @@ def test_04_add_donor(driver):
 def test_05_donor_search(driver):
     driver.get(BASE_URL + "/donors?q=Selenium")
     body = driver.find_element(By.TAG_NAME, "body").text
-    assert "Donor" in body or "donor" in body.lower() or driver.find_element(By.TAG_NAME, "body").is_displayed()
+    assert "Donor" in body or driver.find_element(By.TAG_NAME, "body").is_displayed()
 
 
 def test_06_campaigns_page_loads(driver):
@@ -75,17 +65,9 @@ def test_06_campaigns_page_loads(driver):
 
 def test_07_add_campaign(driver):
     driver.get(BASE_URL + "/campaigns")
-    wait = WebDriverWait(driver, 10)
-    buttons = driver.find_elements(By.TAG_NAME, "button")
-    for btn in buttons:
-        if btn.get_attribute("data-bs-toggle") or "Add" in btn.text:
-            btn.click()
-            break
-    time.sleep(1)
-    wait.until(EC.visibility_of_element_located((By.NAME, "name")))
     driver.find_element(By.NAME, "name").send_keys("Selenium Test Campaign")
     driver.find_element(By.NAME, "target").send_keys("50000")
-    driver.find_element(By.CSS_SELECTOR, "form button[type='submit']").click()
+    driver.find_element(By.CSS_SELECTOR, "button.btn-primary").click()
     time.sleep(1)
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
@@ -98,20 +80,13 @@ def test_08_donations_page_loads(driver):
 def test_09_add_donation(driver):
     driver.get(BASE_URL + "/donations")
     wait = WebDriverWait(driver, 10)
-    buttons = driver.find_elements(By.TAG_NAME, "button")
-    for btn in buttons:
-        if btn.get_attribute("data-bs-toggle") or "Add" in btn.text:
-            btn.click()
-            break
-    time.sleep(1)
     try:
-        wait.until(EC.visibility_of_element_located((By.NAME, "donor_id")))
         select_donor = Select(driver.find_element(By.NAME, "donor_id"))
         if len(select_donor.options) > 1:
             select_donor.select_by_index(1)
         driver.find_element(By.NAME, "amount").send_keys("5000")
         driver.find_element(By.NAME, "date").send_keys("2026-05-03")
-        driver.find_element(By.CSS_SELECTOR, "form button[type='submit']").click()
+        driver.find_element(By.CSS_SELECTOR, "button.btn-primary").click()
         time.sleep(1)
     except Exception:
         pass
@@ -125,17 +100,9 @@ def test_10_beneficiaries_page_loads(driver):
 
 def test_11_add_beneficiary(driver):
     driver.get(BASE_URL + "/beneficiaries")
-    wait = WebDriverWait(driver, 10)
-    buttons = driver.find_elements(By.TAG_NAME, "button")
-    for btn in buttons:
-        if btn.get_attribute("data-bs-toggle") or "Add" in btn.text:
-            btn.click()
-            break
-    time.sleep(1)
-    wait.until(EC.visibility_of_element_located((By.NAME, "name")))
     driver.find_element(By.NAME, "name").send_keys("Selenium Beneficiary")
     driver.find_element(By.NAME, "area").send_keys("Rawalpindi")
-    driver.find_element(By.CSS_SELECTOR, "form button[type='submit']").click()
+    driver.find_element(By.CSS_SELECTOR, "button.btn-primary").click()
     time.sleep(1)
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
@@ -147,17 +114,9 @@ def test_12_volunteers_page_loads(driver):
 
 def test_13_add_volunteer(driver):
     driver.get(BASE_URL + "/volunteers")
-    wait = WebDriverWait(driver, 10)
-    buttons = driver.find_elements(By.TAG_NAME, "button")
-    for btn in buttons:
-        if btn.get_attribute("data-bs-toggle") or "Add" in btn.text:
-            btn.click()
-            break
-    time.sleep(1)
-    wait.until(EC.visibility_of_element_located((By.NAME, "name")))
     driver.find_element(By.NAME, "name").send_keys("Selenium Volunteer")
     driver.find_element(By.NAME, "phone").send_keys("03119876543")
-    driver.find_element(By.CSS_SELECTOR, "form button[type='submit']").click()
+    driver.find_element(By.CSS_SELECTOR, "button.btn-primary").click()
     time.sleep(1)
     assert driver.find_element(By.TAG_NAME, "body").is_displayed()
 
