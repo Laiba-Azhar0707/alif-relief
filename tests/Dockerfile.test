@@ -1,0 +1,18 @@
+FROM python:3.9-slim
+
+RUN apt-get update && apt-get install -y \
+    wget curl unzip gnupg \
+    chromium chromium-driver \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /tests
+
+COPY requirements.test.txt .
+RUN pip install --no-cache-dir -r requirements.test.txt
+
+COPY . .
+
+ENV CHROME_BIN=/usr/bin/chromium
+ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
+
+CMD ["python", "-m", "pytest", "test_alif_relief.py", "-v", "--tb=short", "--junit-xml=test-results.xml"]
