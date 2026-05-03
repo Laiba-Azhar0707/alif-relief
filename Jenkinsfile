@@ -6,13 +6,15 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Laiba-Azhar0707/alif-relief.git'
             }
         }
-        stage('Deploy App') {
-            steps {
-                sh 'docker-compose -f docker-compose.pipeline.yml down || true'
-                sh 'docker-compose -f docker-compose.pipeline.yml up -d --build'
-                sh 'sleep 10'
-            }
-        }
+       stage('Deploy App') {
+    steps {
+        sh 'docker-compose -f docker-compose.pipeline.yml down || true'
+        sh 'docker stop alif-pipeline-db alif-pipeline-web || true'
+        sh 'docker rm -f alif-pipeline-db alif-pipeline-web || true'
+        sh 'docker-compose -f docker-compose.pipeline.yml up -d --build'
+        sh 'sleep 15'
+    }
+}
         stage('Test') {
             steps {
                 sh '''
